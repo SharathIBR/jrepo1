@@ -6,7 +6,7 @@ pipeline {
     options {
         buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '5')
         }
-        environment {
+    environment {
             DOCKERHUB_CREDENTIAL = credentials('dockerhubcred')
             }
     stages {
@@ -15,10 +15,10 @@ pipeline {
                 sh 'docker build -t navami99/testrepo2:testimg1 .'
             }
         }
-        stage('build') {
+        stage('Push') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIAL_PSW | docker login -u $DOCKERHUB_CREDENTIAL_USR --password-stdin'
-                sh 'docker push navami99/testrepo2:testimg1 .'
+                sh 'docker push navami99/testrepo2:testimg1'
             }
         }
     }
